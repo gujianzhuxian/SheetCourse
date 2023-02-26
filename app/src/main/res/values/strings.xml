@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MobileTerminal</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="course_name">课名</string>
+    <string name="classroom">教室</string>
+    <string name="week_of_term">周数</string>
+    <string name="classLength">节数</string>
+    <string name="teacher">老师</string>
+
+    <string name="mon">周一</string>
+    <string name="tues">周二</string>
+    <string name="wed">周三</string>
+    <string name="thur">周四</string>
+    <string name="fri">周五</string>
+    <string name="sat">周六</string>
+    <string name="sun">周日</string>
+
+    <!--    EditFragment-->
+    <string name="edit_course_btn">编辑</string>
+    <string name="edit_text_hint">未输入</string>
+    <string name="menu_save">保存</string>
+    <string name="weekOptions">单双</string>
+    <string name="week_of_term_example">示例:1,7,9,11&#8211;17,19(英文标点)</string>
+</resources>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_gradient">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:id="@+id/lg_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome Login!"
+            android:textSize="38dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:paddingTop="12dp"
+            android:paddingBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/lg_welcome_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="欢迎登录课表堂"
+            android:textSize="18dp"
+            android:textColor="@color/colorGrey"
+            android:layout_below="@id/lg_welcome" />
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/lg_userIcon"-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="100dp"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:scaleType="fitCenter"-->
+        <!--            android:src="@drawable/headportrait"/>-->
+
+        <EditText
+            android:id="@+id/lg_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lg_welcome_show"
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/user"
+            android:theme="@style/myedittext_color"
+            android:drawablePadding="5dp"
+            android:hint="手机号"
+            android:maxLines="1"/>
+
+        <EditText
+            android:id="@+id/lg_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lg_username"
+            android:layout_marginTop="10dp"
+            android:theme="@style/myedittext_color"
+            android:drawableLeft="@drawable/psd"
+            android:drawablePadding="5dp"
+            android:hint="密码"
+            android:maxLines="1"
+            android:inputType="textPassword"/>
+
+        <LinearLayout
+            android:id="@+id/ly"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lg_password">
+
+            <CheckBox
+                android:id="@+id/lg_rememberPsd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:text="记住密码"
+                android:theme="@style/cb_color"
+                android:textColor="#1E90FF"/>
+
+            <TextView
+                android:id="@+id/lg_forgetPsd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="忘记密码"
+                android:textColor="#1E90FF"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/lg_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ly"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_drawable"
+            android:text="登录"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/lg_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:text="没有账号？立即注册"
+        android:textColor="#1E90FF"/>
+
+    <TextView
+        android:id="@+id/lg_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="其他登录方式"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/lg_qq"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/qq"
+            android:layout_marginRight="15dp"/>
+
+        <ImageView
+            android:id="@+id/lg_wechat"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/wechat"/>
+
+        <ImageView
+            android:id="@+id/lg_weibo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/weibo"
+            android:layout_marginLeft="15dp"/>
+    </LinearLayout>
+
+</LinearLayout>
+

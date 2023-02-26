@@ -1,0 +1,25 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = '1.6.10'
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        //使用0.3.4版本会失败
+        classpath 'com.novoda:bintray-release:0.6.1'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id 'com.android.application' version '7.2.2' apply false
+    id 'com.android.library' version '7.2.2' apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+//非常重要 要不它不认识你的项目.kt文件名 其中airpurgeview是你的library名
+//tasks.getByPath(":TimetableView:releaseAndroidJavadocs").enabled = false

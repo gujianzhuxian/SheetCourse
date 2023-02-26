@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/colorBlue" />  <!--    填充色 透明-->
+    <corners android:radius="20dip" />  <!--    圆角-->
+    <padding
+        android:bottom="12dp"
+        android:left="63dp"
+        android:right="63dp"
+        android:top="12dp"
+        />
+    <!--设置边框线的宽度和颜色-->
+</shape>
