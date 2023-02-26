@@ -1,0 +1,64 @@
+server:
+  port: ${APP_PORT:8080}
+
+#开启日志
+#logging:
+#  level:
+#    com:
+#      example:
+#        springbootmybatis: debug
+
+#数据源
+spring:
+  application:
+    name: ${APP_NAME:unnamed}
+  datasource:
+    #druid:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/courcesheet?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: qaz110258357
+    # HikariCP配置:
+    hikari:
+      auto-commit: false
+      connection-timeout: 3000
+      validation-timeout: 3000
+      max-lifetime: 60000
+      maximum-pool-size: 20
+      minimum-idle: 1
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      ssl: ${REDIS_SSL:false}
+      database: ${REDIS_DATABASE:0}
+
+#mybatis
+mybatis:
+  #  Mapper文件存放位置 classpath：指向的是 resources 文件夹
+  mapper-locations: classpath:/mapper/*.xml
+  #  是否开启驼峰命名，Ming =  m_ing
+  map-underscore-to-camel-case: true
+  #  包 - 别名，
+  type-aliases-package: com.example.springbootmybatis.pojo
+
+#--------阿里云短信配置参数 start--------------#
+#阿里云 accessKeyId（安全信息管理下面）
+aliyun:
+  sms:
+    accessKeyId: LTAI5tQFuVuHbpTimNmHBBfz
+  #阿里云 accessKeySecret（安全信息管理下面）
+    accessKeySecret: h3K7XSRQzfee8Pc41QHTjh3P83DfDH
+  #产品名称:云通信短信API产品,开发者无需替换
+    product: Dysmsapi
+  #产品域名,开发者无需替换
+    domain: dysmsapi.aliyuncs.com
+    regionId: cn-hangzhou
+  #短信签名名称（国内/国际/港澳台消息-签名管理下面）
+    signName: 王星武个人网站
+  #发送日期 支持30天内记录查询，格式yyyyMMdd
+    dateFormat: yyyyMMdd
+  #服务结点
+    endpointName: cn-hangzhou
+  #--------阿里云短信配置参数 end--------------#
