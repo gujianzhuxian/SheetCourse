@@ -39,6 +39,9 @@ java后端学习路线：[(318条消息) Java后端学习路线总结_wangyue_ms
 6. 用Android内置的SQLite数据库储存课程数据：[(89条消息) Android课程表App完整版(附详细代码)_～有梦想的人的博客-CSDN博客_android移动开发课程表代码](https://blog.csdn.net/weixin_43268636/article/details/110098174)
 7. [luojie1024/WeiFur: 超级课程表 课程格子 教务系统抓取 SQLite Android Studio HttpWatch Jsoup解析网页 (github.com)](https://github.com/luojie1024/WeiFur)
 8. TimeTable：[github.com](https://github.com/Potato-DiGua/Timetable)
+9. [(93条消息) 单Activity多Fragment模式快速构建一个App_shan_yao的博客-CSDN博客](https://blog.csdn.net/shan_yao/article/details/52152804)
+10. [(93条消息) Android课程表控件v2.0.6用法大集合_lzhuangfei的博客-CSDN博客](https://blog.csdn.net/lzhuangfei/article/details/82500947)
+11. [概述 (yuque.com)](https://www.yuque.com/zhuangfei/timetableview/summary)
 
 
 app+java后端：[(69条消息) 【实验室培训】大学生的Java后端开发学习之路（从App开发讲起）_Dreamchaser追梦的博客-CSDN博客_后端开发培训](https://blog.csdn.net/qq_46101869/article/details/110286514)
