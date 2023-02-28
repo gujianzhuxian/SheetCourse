@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.sheetcourse.mobileterminal">
+    package="com.sheetcourse.mobileterminal" >
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--    读取外部存储-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--    写入外部存储-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读取外部存储 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 写入外部存储 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!--   读取电话状态 -->
-    <!--https://blog.csdn.net/hou09tian/article/details/82991410-->
+
     <application
         android:name=".application.SYApplication"
         android:allowBackup="true"
@@ -24,8 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileTerminal"
-        tools:targetApi="31">
-
+        tools:targetApi="31" >
+        <activity
+            android:name=".activity.CourseActivity"
+            android:exported="false" />
         <activity
             android:name=".LoginForgetActivity"
             android:exported="false" />
@@ -33,20 +31,21 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ClickButtonActivity"
-            android:launchMode="singleTask"
-            android:exported="false" />
-<!--        <activity>子节点定义了应用程序对应的活动。android:name属性指定了活动的名称，即该活动对应的类名；
+            android:exported="false"
+            android:launchMode="singleTask" />
+        <!--
+        <activity>子节点定义了应用程序对应的活动。android:name属性指定了活动的名称，即该活动对应的类名；
 <intent-filter>属性指定了活动的intent过滤器，其中的属性值“android.intent.action.MAIN”表示该活动是
 应用程序的入口活动，当应用程序启动时，首先显示该活动。“android.intent.category.LAUNCHER”表示该活动被列入
 桌面启动器（launcher）中。通过指定这两个参数值，MainActivity活动就被指定为应用程序的主活动。
--->
+        -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".LoginActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

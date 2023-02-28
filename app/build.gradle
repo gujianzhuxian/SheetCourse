@@ -33,6 +33,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -53,6 +56,8 @@ dependencies {
 
     //implementation 'com.jakewharton:butterknife:7.0.1'
     implementation 'com.jakewharton:butterknife:10.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 
 //    发布订阅模式
@@ -81,6 +86,8 @@ dependencies {
     // (https://www.cnblogs.com/zsdblog/p/16542288.html)
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation 'androidx.cardview:cardview:1.0.0'
+    // https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl
+    implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12'
 
 
     implementation 'com.google.firebase:firebase-database:20.0.0'

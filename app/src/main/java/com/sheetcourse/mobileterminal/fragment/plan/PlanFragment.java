@@ -6,19 +6,24 @@ import android.view.View;
 
 import com.sheetcourse.mobileterminal.R;
 import com.sheetcourse.mobileterminal.fragment.BaseFragment;
+import com.sheetcourse.mobileterminal.utils.ConstantUtils;
 import com.sheetcourse.mobileterminal.utils.StartUtils;
+
+import butterknife.ButterKnife;
 
 
 public class PlanFragment extends BaseFragment {
 
     @Override
     protected View getSuccessView() {
-        return null;
+        View view = View.inflate(getActivity(), R.layout.fragment_plan, null);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     protected Object requestData() {
-        return null;
+        return ConstantUtils.STATE_SUCCESSED;
     }
 
     @Override

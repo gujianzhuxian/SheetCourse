@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -22,12 +23,15 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.sheetcourse.mobileterminal.MainActivity;
 import com.sheetcourse.mobileterminal.R;
+import com.sheetcourse.mobileterminal.activity.ClickButtonActivity;
 import com.sheetcourse.mobileterminal.application.SYApplication;
 import com.sheetcourse.mobileterminal.fragment.BaseFragment;
 import com.sheetcourse.mobileterminal.fragment.sheet.util.WeekOfTermSelectDialog;
 import com.sheetcourse.mobileterminal.model.MySubject;
 import com.sheetcourse.mobileterminal.utils.ConstantUtils;
+import com.sheetcourse.mobileterminal.utils.IndirectClass;
 import com.sheetcourse.mobileterminal.utils.Utils;
+import com.sheetcourse.timetableview.model.Schedule;
 
 
 import java.util.ArrayList;
@@ -65,6 +69,11 @@ public class AddCourseFragment extends BaseFragment {
     private int mClassEnd;
     private int mDayOfWeek;
 
+    private Schedule updateSchedule;
+    private static final String[] aStrWeek = new String[]{
+            "周一", "周二", "周三", "周四", "周五", "周六", "周日"
+    };
+
 
 
     @Override
@@ -91,6 +100,13 @@ public class AddCourseFragment extends BaseFragment {
     public void onClick(View view) {
 
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            updateSchedule= (Schedule) getArguments().getSerializable("schedule");
+        }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -102,6 +118,22 @@ public class AddCourseFragment extends BaseFragment {
         mWeekOfTermTextView = view.findViewById(R.id.tv_week_of_term);
         mTeacherEditText = view.findViewById(R.id.et_teacher);
         saveCourse = view.findViewById(R.id.save);
+
+        if(updateSchedule!=null){
+            mNameEditText.setText(updateSchedule.getName());
+            mClassRoomEditText.setText(updateSchedule.getRoom());
+            mTeacherEditText.setText(updateSchedule.getTeacher());
+            mWeekOfTermTextView.setText(String.format(getString(R.string.week_of_term_format),
+                    updateSchedule.getWeekList().toString(), "周"));
+            int class_start = updateSchedule.getStart();
+            int class_num = updateSchedule.getStep();
+            mClassNumTextView.setText(String.format(getString(R.string.schedule_section),
+                    aStrWeek[updateSchedule.getDay() - 1], class_start, (class_start + class_num - 1)));
+            mTeacherEditText.setText(updateSchedule.getTeacher());
+            mDayOfWeek=updateSchedule.getDay();
+            mClassStart=updateSchedule.getStart();
+            mClassEnd=mClassStart+updateSchedule.getStep()-1;
+        }
         setData();//设置pickerView的数据填充
          //填充关于旗标的文本
 
@@ -169,7 +201,6 @@ public class AddCourseFragment extends BaseFragment {
         mySubject.setDay(mDayOfWeek);
         mySubject.setTime("12:00");//无用数据
         mySubject.setColorRandom(colors[random.nextInt(15)]);
-
         return true;
     }
 

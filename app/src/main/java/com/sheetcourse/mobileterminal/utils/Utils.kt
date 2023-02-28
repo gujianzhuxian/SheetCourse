@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.view.Window
+import android.widget.Toast
 import androidx.cardview.widget.CardView
+import com.sheetcourse.mobileterminal.application.SYApplication
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -399,22 +402,22 @@ object Utils {
 //        showToast(textId, true)
 //    }
 
-//    @JvmStatic
-//    fun showToast(text: String?) {
-//        showToast(text, true)
-//    }
+    @JvmStatic
+    fun showToast(text: String?) {
+        showToast(text, true)
+    }
 
     /**
      * 展示提醒
      * @param text 内容
-//     */
-//    @JvmStatic
-//    fun showToast(text: String?, isShortLength: Boolean) {
-//        if (!TextUtils.isEmpty(text)) {
-//            val duration = if (isShortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG
-//            Toast.makeText(MyApplication.getApplication(), text, duration).show()
-//        }
-//    }
+     */
+    @JvmStatic
+    fun showToast(text: String?, isShortLength: Boolean) {
+        if (!TextUtils.isEmpty(text)) {
+            val duration = if (isShortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG
+            Toast.makeText(SYApplication.getApplication(), text, duration).show()
+        }
+    }
 
     @JvmStatic
     fun getStatusBarAndActionBarHeight(activity: Activity): Int {

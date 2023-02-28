@@ -17,7 +17,7 @@ public class Register {
     private OkHttpClient okHttpClient;
     //创建Retrofit实例
     private final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.2.5:8080/")
+            .baseUrl("http://10.14.5.34:8080/")
             //.client(okHttpClient)
             //设置数据解析器
             //.addConverterFactory(new NullOnEmptyConverterFactory()) //必须是要第一个

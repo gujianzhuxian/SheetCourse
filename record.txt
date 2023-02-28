@@ -1,2 +1,28 @@
 [(91条消息) Android——Fragment向Activity传递数据..._Li_peilun的博客-CSDN博客_android fragment向activity传递数据]
 (https://blog.csdn.net/li_peilun/article/details/55281693)
+
+待修复Bug：
+    1. 登陆成功之后，下次登陆时，不用再次登录。
+    2. excel课程表导入后，下次打开app，课程表依然存在。
+    3. 添加一门课程，添加完成后，界面更新渲染问题与内存保存问题。
+    4. 显示节次时间相关模块开发。
+    5. 课程详情中，周数设置勉强展现，需要将源代码中weekofterm相关模块搞清楚再解决。
+    6. 编辑课程界面fragment涉及到增添课程与修改课程两个模块的代码，还没有完全统一。
+    7. 增添课程之后，第一次点击游标，会进入课程编辑界面，第二次点击游标，才会进入课程详情页面。
+下一步打算：
+    1. 修复已有Bug。
+    2. 人员、消息集群。
+    3. 课程内部相关模块，以时间再考虑。
+参考项目：
+    1. Timetable
+    2. AndroidTimetableView控件
+    3. SimpleView
+    4. FragmentTest3302
+    5. MyApplication
+本项目地址：
+    git@github.com:gujianzhuxian/SheetCourse.git
+简介：
+    后端springboot、mybatis、redis、openapi、sms,
+    移动端java、kotlin(5%)、retrofit、room数据库还有课程表控件,
+        设计模式：多activity多fragment、多层封装
+

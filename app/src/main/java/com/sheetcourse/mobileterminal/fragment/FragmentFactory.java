@@ -62,11 +62,13 @@ public class FragmentFactory {
                 //[(91条消息) Android普通类调用活动中函数的方法_小超小调的博客-CSDN博客_调用mainactivity中的函数]
                 // (https://blog.csdn.net/qq_34205684/article/details/110822168)
                 fragment = new SheetFragment();
+                System.out.println("进入课表");
                 IndirectClass indirect= MainActivity.indirectClass;
                 Context context= (Context) indirect.getContxt();
                 MainActivity activity = (MainActivity) indirect.getActivity();
                 Bundle bundle=activity.getBundle();
-                if(bundle!=null){fragment.setArguments(bundle);}
+                if(bundle!=null){fragment.setArguments(bundle);}//clickButtonActivity返回到MainActivity所携带的bundle
+
                 break;
             case 2:// 我的
                 fragment = new MeFragment();

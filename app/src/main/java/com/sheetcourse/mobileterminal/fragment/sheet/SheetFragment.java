@@ -1,13 +1,16 @@
 package com.sheetcourse.mobileterminal.fragment.sheet;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.sheetcourse.mobileterminal.R;
 import com.sheetcourse.mobileterminal.activity.ClickButtonActivity;
@@ -33,7 +37,11 @@ import com.sheetcourse.mobileterminal.language.OnEnglishItemBuildAdapter;
 import com.sheetcourse.mobileterminal.model.MySubject;
 import com.sheetcourse.mobileterminal.model.SubjectRepertory;
 import com.sheetcourse.mobileterminal.utils.ConstantUtils;
+import com.sheetcourse.mobileterminal.utils.DialogUtils;
+import com.sheetcourse.mobileterminal.utils.ExcelUtils;
+import com.sheetcourse.mobileterminal.utils.FileUtils;
 import com.sheetcourse.mobileterminal.utils.StartUtils;
+import com.sheetcourse.mobileterminal.utils.Utils;
 import com.sheetcourse.timetableview.TimetableView;
 import com.sheetcourse.timetableview.listener.ISchedule;
 import com.sheetcourse.timetableview.listener.IWeekView;
@@ -43,6 +51,8 @@ import com.sheetcourse.timetableview.model.Schedule;
 import com.sheetcourse.timetableview.view.WeekView;
 import com.bumptech.glide.Glide;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +64,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 public class SheetFragment extends BaseFragment implements View.OnClickListener {
     private static final int REQUEST_CODE_COURSE_EDIT = 1;//请求代码请求编辑
+    private static final int REQUEST_CODE_FILE_CHOOSE = 2;//请求代码文件选择
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     //http://www.tastones.com/stackoverflow/android/butterknife/unbinding_views_in_butterknife/
@@ -78,6 +89,7 @@ public class SheetFragment extends BaseFragment implements View.OnClickListener 
     //记录切换的周次，不一定是当前周
     int target = -1;
     AlertDialog alertDialog;
+
 
     @Override
     protected View getSuccessView() {
@@ -111,7 +123,8 @@ public class SheetFragment extends BaseFragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ExampleFragment");
         if (getArguments() != null) {
-            subject = (MySubject) getArguments().getSerializable("mysubject");
+            subject = (MySubject) getArguments().getSerializable("mysubject");//接收AddcourseFragment增添新的课程的实体对象
+            mySubjects= (List<MySubject>) getArguments().getSerializable("mysubjects");
         }
     }
     @Override
@@ -135,6 +148,7 @@ public class SheetFragment extends BaseFragment implements View.OnClickListener 
 //        这里不要解绑，解绑之后会空指针
 //        unbinder.unbind();
     }
+
     /**
      * 2秒后刷新界面，模拟网络请求
      */
@@ -160,11 +174,15 @@ public class SheetFragment extends BaseFragment implements View.OnClickListener 
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(alertDialog!=null) alertDialog.hide();
-            mySubjects = SubjectRepertory.loadDefaultSubjects();
+//            mySubjects = SubjectRepertory.loadDefaultSubjects();
 
-            if(subject!=null){mySubjects.add(subject);}
-            mWeekView.source(mySubjects).showView();
-            mTimetableView.source(mySubjects).showView();
+            if(subject!=null){
+                if(mySubjects!=null){mySubjects.add(subject);}
+            }
+            if(mySubjects!=null){
+                mWeekView.source(mySubjects).showView();
+                mTimetableView.source(mySubjects).showView();
+            }
         }
     };
 
@@ -314,7 +332,7 @@ public class SheetFragment extends BaseFragment implements View.OnClickListener 
     protected void display(List<Schedule> beans) {
         Intent intent = new Intent(SYApplication.getContext(), ClickButtonActivity.class);
         intent.putExtra("resId",R.id.details);
-        intent.putExtra("title","课程详情");
+        intent.putExtra("title","编辑课程");
         Bundle bundle = new Bundle();
         bundle.putSerializable("beans", (Serializable) beans);
         intent.putExtra("beans",bundle);
@@ -341,6 +359,54 @@ public class SheetFragment extends BaseFragment implements View.OnClickListener 
         mWeekView.isShow(true);
         titleTextView.setTextColor(getResources().getColor(R.color.app_red));
     }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == Activity.RESULT_OK) {
+//            switch (requestCode) {
+//                case REQUEST_CODE_FILE_CHOOSE:
+//                    if (data == null) {
+//                        return;
+//                    }
+//                    Uri uri = data.getData();
+//                    String name = FileUtils.getNameFromUri(getActivity(), uri);
+//                    if (!FileUtils.getFileExtension(name).equals("xls")) {
+//                        DialogUtils.showTipDialog(getActivity(), "请选择后缀名为xls的Excel文件");
+//                        return;
+//                    }
+//                    String path = getActivity().getExternalCacheDir().getAbsolutePath() + File.separator + name;
+//                    if (TextUtils.isEmpty(path)) {
+//                        Utils.showToast("获取文件路径失败");
+//                        return;
+//                    }
+//                    try {
+//                        if (!FileUtils.fileCopy(getActivity().getContentResolver().openInputStream(uri), path)) {
+//                            return;
+//                        }
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                        return;
+//                    }
+//
+//                    mySubjects = ExcelUtils.handleExcel(path);
+//
+//                    //mMyDBHelper.insertItems(sCourseList);
+//                    saveCurrentTimetable();
+//                    if(mySubjects!=null){
+//                        mWeekView.source(mySubjects).showView();
+//                        mTimetableView.source(mySubjects).showView();
+//                    }
+////                    updateTimetable();
+//                    //Log.d("path", path);
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
+//    private void saveCurrentTimetable() {
+//        new FileUtils<List<MySubject>>().saveToJson(getActivity(), mySubjects, FileUtils.TIMETABLE_FILE_NAME);
+//    }
 
     /**
      * 显示弹出菜单
@@ -354,8 +420,14 @@ public class SheetFragment extends BaseFragment implements View.OnClickListener 
                     case R.id.top1:
                         addSubject();
                         break;
-                    case R.id.top2:
-                        deleteSubject();
+//                    case R.id.top2:
+//                        deleteSubject();
+//                        break;
+                    case R.id.top3:
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType("application/*");
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        getActivity().startActivityForResult(intent, REQUEST_CODE_FILE_CHOOSE);
                         break;
                     case R.id.top4:
                         hideNonThisWeek();
@@ -395,14 +467,14 @@ public class SheetFragment extends BaseFragment implements View.OnClickListener 
      * 内部使用集合维护课程数据，操作集合的方法来操作它即可
      * 最后更新一下视图（全局更新）
      */
-    protected void deleteSubject() {
-        int size = mTimetableView.dataSource().size();
-        int pos = (int) (Math.random() * size);
-        if (size > 0) {
-            mTimetableView.dataSource().remove(pos);
-            mTimetableView.updateView();
-        }
-    }
+//    protected void deleteSubject() {
+//        int size = mTimetableView.dataSource().size();
+//        int pos = (int) (Math.random() * size);
+//        if (size > 0) {
+//            mTimetableView.dataSource().remove(pos);
+//            mTimetableView.updateView();
+//        }
+//    }
 
     /**
      * 添加课程

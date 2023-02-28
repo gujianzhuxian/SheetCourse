@@ -12,6 +12,10 @@ import java.util.List;
  *
  */
 public class SubjectRepertory {
+	public static List<MySubject> loadExcelSubjects(){
+
+		return null;
+	}
 
 	public static List<MySubject> loadDefaultSubjects(){
 		//json转义

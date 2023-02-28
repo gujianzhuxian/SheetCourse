@@ -35,7 +35,7 @@ public class Login{
 
     //创建Retrofit实例
     private final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.2.5:8080/")
+            .baseUrl("http://10.14.5.34:8080/")
             //.client(OkHttpHolder.OK_HTTP_CLIENT)
             //设置数据解析器
             .addConverterFactory(GsonConverterFactory.create())

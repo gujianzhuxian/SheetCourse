@@ -33,4 +33,5 @@
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1565C0</color>
     <color name="text_view_color">#0C0B0B</color>
+    <color name="background_color_white">#F0F0F0</color>
 </resources>

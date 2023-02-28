@@ -173,7 +173,7 @@
 
         </androidx.cardview.widget.CardView>
         <Button
-            android:id="@+id/save"
+            android:id="@+id/enter_course"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -181,7 +181,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/button_drawable"
-            android:text="保存"
+            android:text="进入课程"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
     </LinearLayout>

@@ -302,7 +302,10 @@ public class ScheduleSupport {
      */
     public static boolean isThisWeek(Schedule subject, int cur_week) {
         List<Integer> weekList = subject.getWeekList();
-        if (weekList.indexOf(cur_week) != -1) return true;
+//        if (weekList.indexOf(cur_week) != -1) {
+        if (weekList.contains(cur_week)) {
+            return true;
+        };
         return false;
     }
 

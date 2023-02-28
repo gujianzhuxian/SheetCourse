@@ -3,8 +3,12 @@ package com.sheetcourse.mobileterminal;
 //import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -18,9 +22,18 @@ import com.sheetcourse.mobileterminal.activity.BaseActivity;
 import com.sheetcourse.mobileterminal.adapter.MainPagerAdapter;
 import com.sheetcourse.mobileterminal.fragment.sheet.SheetFragment;
 import com.sheetcourse.mobileterminal.model.MySubject;
+import com.sheetcourse.mobileterminal.utils.DialogUtils;
+import com.sheetcourse.mobileterminal.utils.ExcelUtils;
+import com.sheetcourse.mobileterminal.utils.FileUtils;
 import com.sheetcourse.mobileterminal.utils.IndirectClass;
 import com.sheetcourse.mobileterminal.utils.PersonnalisationUtils;
+import com.sheetcourse.mobileterminal.utils.Utils;
 import com.sheetcourse.mobileterminal.widgets.NoScrollViewPager;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +75,8 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         Intent intent=getIntent();
         MySubject subject=(MySubject)intent.getSerializableExtra("Mysubject");
+        mySubjects= (List<MySubject>) intent.getSerializableExtra("listsubject");
+        System.out.println("自身传给自身的mysubjects"+mySubjects);
         initView(subject);
     }
     private void initView(MySubject subject) {
@@ -75,6 +90,15 @@ public class MainActivity extends BaseActivity {
             Bundle bundle = new Bundle();
 //            System.out.println(bundle);
             bundle.putSerializable("mysubject",subject);
+            setBundle(bundle);
+            bottomSheet.setChecked(true);
+            viewpager.setCurrentItem(1, false);
+            homeTitle.setText("课程表");
+            actionBarLayout.setVisibility(View.GONE);
+        }
+        if(mySubjects!=null){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("mysubjects", (Serializable) mySubjects);
             setBundle(bundle);
             bottomSheet.setChecked(true);
             viewpager.setCurrentItem(1, false);
@@ -103,5 +127,74 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+    }
+    final String FRAGMENT_TAG = "fragment";
+
+    /*在fragment的管理类中，我们要实现这部操作，而他的主要作用是，当D这个activity回传数据到
+这里碎片管理器下面的fragnment中时，往往会经过这个管理器中的onActivityResult的方法。*/
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Fragment f=(SheetFragment)getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+//        if (f == null) {
+//            f = new SheetFragment();
+////            f.setTargetFragment(f, 0);
+//            //重新添加fragment
+//            getSupportFragmentManager().beginTransaction().add(f, FRAGMENT_TAG).commit();
+//        }
+//        /*然后在碎片中调用重写的onActivityResult方法*/
+//        f.onActivityResult(requestCode, resultCode, data);
+//    }
+    private static final int REQUEST_CODE_FILE_CHOOSE = 2;//请求代码文件选择
+    List<MySubject> mySubjects;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_FILE_CHOOSE:
+                    if (data == null) {
+                        System.out.println(data);
+                        return;
+                    }
+                    Uri uri = data.getData();
+                    String name = FileUtils.getNameFromUri(this, uri);
+                    if (!FileUtils.getFileExtension(name).equals("xls")) {
+                        DialogUtils.showTipDialog(this, "请选择后缀名为xls的Excel文件");
+                        return;
+                    }
+                    String path = getExternalCacheDir().getAbsolutePath() + File.separator + name;
+                    if (TextUtils.isEmpty(path)) {
+                        Utils.showToast("获取文件路径失败");
+                        return;
+                    }
+                    try {
+                        if (!FileUtils.fileCopy(getContentResolver().openInputStream(uri), path)) {
+                            return;
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+
+                    mySubjects = ExcelUtils.handleExcel(path);
+
+                    //mMyDBHelper.insertItems(sCourseList);
+                    saveCurrentTimetable();
+                    System.out.println(mySubjects);
+                    finish();
+                    Intent intent=new Intent(this,MainActivity.class);
+                    intent.putExtra("listsubject", (Serializable) mySubjects);
+                    startActivity(intent);
+
+//                    updateTimetable();
+                    //Log.d("path", path);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    private void saveCurrentTimetable() {
+        new FileUtils<List<MySubject>>().saveToJson(this, mySubjects, FileUtils.TIMETABLE_FILE_NAME);
     }
 }
